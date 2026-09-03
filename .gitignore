@@ -1,0 +1,75 @@
+# ==========================================
+# PYTHON
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# VIRTUAL ENVIRONMENTS
+# ==========================================
+venv/
+.venv/
+env/
+ENV/
+.venv/bin/
+.venv/lib/
+
+# ==========================================
+# IDE & EDITORS (VS Code, PyCharm, etc.)
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ==========================================
+# OS GENERATED FILES
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# STREAMLIT & PROJECT SPECIFIC
+# ==========================================
+# Folder config Streamlit (jika nanti ada secrets)
+.streamlit/secrets.toml
+
+# Audit logs (jika nanti lu save log ke file)
+logs/
+*.log
+
+# Environment variables (JANGAN PERNAH upload API keys ke GitHub!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
