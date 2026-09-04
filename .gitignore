@@ -62,6 +62,15 @@ Desktop.ini
 # ==========================================
 # Folder config Streamlit (jika nanti ada secrets)
 .streamlit/secrets.toml
+streamlit/secrets.toml
+secrets.toml
+*.key
+
+# 4. Update .gitignore
+groq_apiKey.txt
+secrets.toml
+.streamlit/secrets.toml
+streamlit/secrets.toml
 
 # Audit logs (jika nanti lu save log ke file)
 logs/
