@@ -1,116 +1,189 @@
 import streamlit as st
 
-from agent import LayanAgent
-
 st.set_page_config(
-    page_title="Layan Care",
-    page_icon="💬",
-    layout="centered",
-    initial_sidebar_state="collapsed",
+    page_title="Layan Care", page_icon="💬", layout="wide", initial_sidebar_state="expanded"
 )
 
 # ===== CUSTOM CSS =====
 st.markdown(
     """
 <style>
-    .main-title {
-        font-size: 2rem;
-        font-weight: 700;
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
         color: #1e40af;
         text-align: center;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
     }
-    .subtitle {
-        text-align: center;
+    .hero-subtitle {
+        font-size: 1.3rem;
         color: #64748b;
-        margin-bottom: 1.8rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
     }
-    .user-bubble {
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-        color: white;
-        padding: 0.9rem 1.2rem;
-        border-radius: 18px 18px 4px 18px;
-        margin: 0.6rem 0 0.6rem 15%;
-        text-align: left;
-    }
-    .bot-bubble {
+    .feature-card {
         background: #f8fafc;
-        color: #1e293b;
-        padding: 0.9rem 1.2rem;
-        border-radius: 18px 18px 18px 4px;
-        margin: 0.6rem 15% 0.6rem 0;
         border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.5rem;
+        height: 100%;
+        text-align: center;
     }
-    .stButton > button {
-        border-radius: 12px;
-        height: 2.8rem;
-        font-size: 0.9rem;
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+    .feature-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+        color: #64748b;
+        font-size: 0.95rem;
     }
 </style>
 """,
     unsafe_allow_html=True,
 )
 
-# ===== HEADER =====
-st.markdown('<div class="main-title">💬 Layan Care</div>', unsafe_allow_html=True)
+# ===== HERO SECTION =====
+st.markdown('<div class="hero-title">💬 Layan Care</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">Customer Service yang siap bantu kamu</div>',
+    '<div class="hero-subtitle">Asisten Customer Service Pintar untuk Klaim Retur & Layanan Pelanggan</div>',
     unsafe_allow_html=True,
 )
 
-# ===== SESSION STATE =====
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": "Halo! Saya Layan 😊 Ada yang bisa saya bantu hari ini? Silakan ceritakan keluhan kamu.",
-        }
-    ]
-
-if "agent" not in st.session_state:
-    st.session_state.agent = LayanAgent()
-
-# ===== TAMPILKAN CHAT =====
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.markdown(
-            f'<div class="user-bubble"><b>Anda</b><br>{msg["content"]}</div>',
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            f'<div class="bot-bubble"><b>Layan</b><br>{msg["content"]}</div>',
-            unsafe_allow_html=True,
-        )
-
 st.write("")
 
-# ===== QUICK REPLIES =====
-st.caption("Pilihan cepat:")
+# ===== CTA BUTTON =====
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.link_button(
+        "🚀 Mulai Chat dengan Layan",
+        "Layan_Care",  # akan mengarah ke halaman chat
+        use_container_width=True,
+        type="primary",
+    )
 
-quick_replies = [
-    ("📱 Barang Rusak", "Barang yang saya beli rusak, layarnya retak."),
-    ("⏰ Sudah lewat 2 minggu", "Saya beli barangnya 3 minggu yang lalu, sekarang rusak."),
-    ("💰 Barang mahal", "HP saya yang harganya 18 juta rusak."),
-    ("📷 Sudah ada foto", "Saya sudah punya foto kerusakannya."),
-]
+st.write("")
+st.divider()
 
-cols = st.columns(4)
-for i, (label, text) in enumerate(quick_replies):
-    with cols[i]:
-        if st.button(label, use_container_width=True, key=f"qr_{i}"):
-            st.session_state.messages.append({"role": "user", "content": text})
-            with st.spinner("Layan sedang membalas..."):
-                response, belief, decision = st.session_state.agent.process(text)
-            st.session_state.messages.append({"role": "assistant", "content": response})
-            st.rerun()
+# ===== LAYANAN YANG DITAWARKAN =====
+st.markdown("### ✨ Layanan yang Kami Tawarkan")
 
-# ===== CHAT INPUT =====
-user_input = st.chat_input("Ketik pesan kamu di sini...")
+col1, col2, col3 = st.columns(3)
 
-if user_input:
-    st.session_state.messages.append({"role": "user", "content": user_input})
-    with st.spinner("Layan sedang membalas..."):
-        response, belief, decision = st.session_state.agent.process(user_input)
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.rerun()
+with col1:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">Klaim Retur Barang Rusak</div>
+        <div class="feature-desc">
+            Laporkan barang rusak dengan mudah. Sistem akan otomatis mengecek syarat retur.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+with col2:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Proses Cepat & Otomatis</div>
+        <div class="feature-desc">
+            Klaim yang memenuhi syarat bisa langsung disetujui tanpa menunggu lama.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+with col3:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Pengawasan Human Agent</div>
+        <div class="feature-desc">
+            Kasus bernilai tinggi atau kompleks akan diteruskan ke supervisor manusia.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+st.write("")
+st.write("")
+
+col4, col5, col6 = st.columns(3)
+
+with col4:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <div class="feature-title">Verifikasi Bukti Foto</div>
+        <div class="feature-desc">
+            Kirim foto kerusakan untuk mempercepat proses validasi klaim.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+with col5:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">AI + Rule Engine</div>
+        <div class="feature-desc">
+            Kombinasi LLM dan aturan bisnis membuat keputusan lebih akurat dan transparan.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+with col6:
+    st.markdown(
+        """
+    <div class="feature-card">
+        <div class="feature-icon">🕒</div>
+        <div class="feature-title">Tersedia 24/7</div>
+        <div class="feature-desc">
+            Layan siap membantu kapan saja tanpa batasan jam kerja.
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+st.write("")
+st.divider()
+
+# ===== CARA KERJA =====
+st.markdown("### 🔄 Cara Kerja Singkat")
+
+st.markdown("""
+1. **Ceritakan keluhanmu** — Ketik atau pilih opsi cepat  
+2. **Layan menganalisis** — Sistem membaca intent, emosi, dan detail klaim  
+3. **Keputusan otomatis** — Approve / Minta bukti / Eskalasi ke manusia  
+4. **Selesai** — Kamu langsung dapat jawaban yang jelas
+""")
+
+st.write("")
+st.divider()
+
+# ===== FOOTER =====
+st.markdown(
+    "<div style='text-align:center; color:#94a3b8; font-size:0.9rem;'>"
+    "Powered by Groq LLM + BDI Guardrails · Dibuat untuk pengalaman customer service yang lebih baik"
+    "</div>",
+    unsafe_allow_html=True,
+)
