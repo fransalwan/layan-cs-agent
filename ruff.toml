@@ -1,0 +1,13 @@
+# ruff.toml
+line-length = 100
+indent-width = 4
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]  # biarkan line terlalu panjang ditangani formatter
